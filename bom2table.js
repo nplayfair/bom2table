@@ -32,6 +32,17 @@ function generateTableHead(table, data) {
   }
 }
 
+function generateTableBody (table, data) {
+  for (let element of data) {
+    let row = table.insertRow();
+    for (key in element) {
+      let cell = row.insertCell();
+      let text = document.createTextNode(element[key]);
+      cell.appendChild(text);
+    }
+  }
+}
+
 // Return false if the Part value of the object passed in is in the list to remove
 function isJunk (element) {
   return !rejectedParts.includes(element.Part)
@@ -47,11 +58,12 @@ function makeTable(csvString) {
     .then(jsonObj => {
       // Create array containing only relevant parts
       let parts = jsonObj.filter(isJunk)
-      console.log(parts)
+      // console.log(parts)
+      let table = document.querySelector("table")
+      let headerData = Object.keys(parts[0])
+      generateTableBody(table, parts)
+      generateTableHead(table, headerData)
     })
 }
 
 
-// let table = document.querySelector("table")
-// let headerData = Object.keys(parts[0])
-// generateTableHead(table, headerData)

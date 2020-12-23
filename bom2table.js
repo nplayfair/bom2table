@@ -1,3 +1,4 @@
+const csv = require('csvtojson')
 const csvPicker = document.getElementById('csvFile')
 csvPicker.addEventListener("change", handleFiles, false);
 

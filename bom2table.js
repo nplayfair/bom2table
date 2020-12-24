@@ -46,7 +46,7 @@ function generateTableBody (table, data) {
 
 // Return false if the Part value of the object passed in is in the list to remove
 function isJunk (element) {
-  return !rejectedParts.includes(element.Part)
+  return !rejectedParts.includes(element.Part);
 }
 
 function makeTable(csvString) {
@@ -64,7 +64,7 @@ function makeTable(csvString) {
       let headerData = Object.keys(parts[0])
       generateTableBody(table, parts)
       generateTableHead(table, headerData)
-    })
+    });
 }
 
 

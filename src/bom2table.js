@@ -1,3 +1,4 @@
+const beautify = require('js-beautify').html
 const csv = require('csvtojson')
 const csvPicker = document.getElementById('csvFile')
 csvPicker.addEventListener("change", handleFiles, false);
@@ -64,7 +65,21 @@ function makeTable(csvString) {
       let headerData = Object.keys(parts[0])
       generateTableBody(table, parts)
       generateTableHead(table, headerData)
+      displayMarkup()
     });
+}
+
+// Format the HTML nicely and output to a pre code block
+function displayMarkup() {
+  let tableCode = document.querySelector("table").outerHTML
+  let markup = document.getElementById("markup")
+  beautifulCode = beautify(tableCode, {
+    indent_size: 2,
+    indent_char: ' ',
+    indent_with_tabs: false,
+    wrap_line_length: 40
+  })
+  markup.innerText = beautifulCode
 }
 
 

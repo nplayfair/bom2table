@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run bundle && npm run copy:html",
-    "bundle": "browserify ./src/bom2table.js -o ./dist/bundle.js",
+    "bundle": "browserify ./src/bom2table.js -p tinyify -o ./dist/bundle.js",
     "copy:html": "cpy 'src/*.html' 'dist/'"
   },
   "author": "nplayfair",
@@ -14,7 +14,15 @@
     "browserify": "^17.0.0",
     "cpy-cli": "^3.1.1",
     "csvtojson": "^2.0.10",
-    "js-beautify": "^1.13.0"
+    "js-beautify": "^1.13.5"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1",
+    "tinyify": "^3.0.0"
+  }
 }

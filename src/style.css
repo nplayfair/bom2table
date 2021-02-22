@@ -1,7 +1,7 @@
 header {
   margin: 1.5rem;
 }
-header h1 {
+header h1, h2 {
   text-align: center;
 }
 main {
@@ -10,9 +10,9 @@ main {
   flex-flow: wrap;
   min-width: 500px;
   max-width: 80vw;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 section {
-  flex 0 0 50%;
+  flex: 0 0 45%;
 }

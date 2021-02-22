@@ -11,6 +11,10 @@ function isJunk(element) {
   return !rejectedParts.includes(element.Part);
 }
 
+function clearTable() {
+  document.querySelector('table').innerHTML = '';
+}
+
 function generateTableHead(table, data) {
   const thead = table.createTHead();
   const row = thead.insertRow();
@@ -38,8 +42,7 @@ function generateTableBody(table, data) {
 function displayMarkup() {
   const tableCode = document.querySelector('table').outerHTML;
   const markup = document.getElementById('markup');
-  const beautifulCode = pretty(tableCode);
-  markup.innerText = beautifulCode;
+  markup.innerText = pretty(tableCode);
 }
 
 function makeTable(csvString) {
@@ -62,10 +65,14 @@ function makeTable(csvString) {
 }
 
 function handleFiles() {
+
   const csvFilePath = this.files[0];
   const reader = new FileReader();
   reader.readAsText(csvFilePath);
-  reader.onload = () => makeTable(reader.result);
+  reader.onload = () => {
+    clearTable();
+    makeTable(reader.result);
+  };
 }
 
 const csvPicker = document.getElementById('csvFile');

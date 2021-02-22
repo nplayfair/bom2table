@@ -1,85 +1,72 @@
-const beautify = require('js-beautify').html
-const csv = require('csvtojson')
-const csvPicker = document.getElementById('csvFile')
-csvPicker.addEventListener("change", handleFiles, false);
+// Modules
+const pretty = require('pretty');
+const csv = require('csvtojson');
 
-function handleFiles() {
-  const csvFilePath = this.files[0]
-  let reader = new FileReader()
-  reader.readAsText(csvFilePath)
-  reader.onload = () => makeTable(reader.result)
+// Configuration
+// Which components should we remove from the BOM?
+const rejectedParts = ['TP1', 'TP2', 'TP3', 'G', 'U$1', 'S1', 'J1', 'J2', 'INPUT'];
+
+// Return false if the Part value of the object passed in is in the list to remove
+function isJunk(element) {
+  return !rejectedParts.includes(element.Part);
 }
 
-// Which components should we remove from the BOM?
-const rejectedParts = [
-  'TP1',
-  'TP2',
-  'TP3',
-  'G',
-  'U$1',
-  'J1',
-  'J2',
-  'INPUT'
-]
-
 function generateTableHead(table, data) {
-  let thead = table.createTHead();
-  let row = thead.insertRow();
+  const thead = table.createTHead();
+  const row = thead.insertRow();
   // Populate Header row
-  for (let key of data) {
-    let th = document.createElement("th");
-    let text = document. createTextNode(key);
+  for (const key of data) {
+    const th = document.createElement('th');
+    const text = document.createTextNode(key);
     th.appendChild(text);
     row.appendChild(th);
   }
 }
 
-function generateTableBody (table, data) {
-  for (let element of data) {
-    let row = table.insertRow();
-    for (key in element) {
-      let cell = row.insertCell();
-      let text = document.createTextNode(element[key]);
+function generateTableBody(table, data) {
+  for (const element of data) {
+    const row = table.insertRow();
+    for (const key in element) {
+      const cell = row.insertCell();
+      const text = document.createTextNode(element[key]);
       cell.appendChild(text);
     }
   }
 }
 
-// Return false if the Part value of the object passed in is in the list to remove
-function isJunk (element) {
-  return !rejectedParts.includes(element.Part);
+// Format the HTML nicely and output to a pre code block
+function displayMarkup() {
+  const tableCode = document.querySelector('table').outerHTML;
+  const markup = document.getElementById('markup');
+  const beautifulCode = pretty(tableCode);
+  markup.innerText = beautifulCode;
 }
 
 function makeTable(csvString) {
   csv({
-    delimiter: ";",
+    delimiter: ';',
     includeColumns: /(Part|Value)/,
-    ignoreEmpty: true
+    ignoreEmpty: true,
   })
     .fromString(csvString)
-    .then(jsonObj => {
+    .then((jsonObj) => {
       // Create array containing only relevant parts
-      let parts = jsonObj.filter(isJunk)
+      const parts = jsonObj.filter(isJunk);
       // console.log(parts)
-      let table = document.querySelector("table")
-      let headerData = Object.keys(parts[0])
-      generateTableBody(table, parts)
-      generateTableHead(table, headerData)
-      displayMarkup()
+      const table = document.querySelector('table');
+      const headerData = Object.keys(parts[0]);
+      generateTableBody(table, parts);
+      generateTableHead(table, headerData);
+      displayMarkup();
     });
 }
 
-// Format the HTML nicely and output to a pre code block
-function displayMarkup() {
-  let tableCode = document.querySelector("table").outerHTML
-  let markup = document.getElementById("markup")
-  beautifulCode = beautify(tableCode, {
-    indent_size: 2,
-    indent_char: ' ',
-    indent_with_tabs: false,
-    wrap_line_length: 40
-  })
-  markup.innerText = beautifulCode
+function handleFiles() {
+  const csvFilePath = this.files[0];
+  const reader = new FileReader();
+  reader.readAsText(csvFilePath);
+  reader.onload = () => makeTable(reader.result);
 }
 
-
+const csvPicker = document.getElementById('csvFile');
+csvPicker.addEventListener('change', handleFiles, false);

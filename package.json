@@ -2,11 +2,12 @@
   "name": "bom2table",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bom2table.js",
   "scripts": {
-    "build": "npm run bundle && npm run copy:html",
+    "build": "npm run bundle && npm run copy:html && npm run copy:css",
     "bundle": "browserify ./src/bom2table.js -p tinyify -o ./dist/bundle.js",
-    "copy:html": "cpy 'src/*.html' 'dist/'"
+    "copy:html": "cpy 'src/*.html' 'dist/'",
+    "copy:css": "cpy 'src/*.css' 'dist/'"
   },
   "author": "nplayfair",
   "license": "MIT",
@@ -14,7 +15,8 @@
     "browserify": "^17.0.0",
     "cpy-cli": "^3.1.1",
     "csvtojson": "^2.0.10",
-    "js-beautify": "^1.13.5"
+    "js-beautify": "^1.13.5",
+    "pretty": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^7.20.0",

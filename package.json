@@ -12,13 +12,11 @@
   "author": "nplayfair",
   "license": "MIT",
   "dependencies": {
-    "browserify": "^17.0.0",
-    "cpy-cli": "^3.1.1",
     "csvtojson": "^2.0.10",
-    "js-beautify": "^1.13.5",
     "pretty": "^2.0.0"
   },
   "devDependencies": {
+    "cpy-cli": "^3.1.1",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.0.0",

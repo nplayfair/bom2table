@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BOM2Table</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>BOM2Table</title>
+  </head>
+  <body>
+    <header>
+      <h1>BOM to Table</h1>
+    </header>
+    <main>
+      <section>
+        <h2>Upload BOM csv file</h2>
+        <input id="csvFile" type="file" accept=".csv" />
+        <hr />
+        <table></table>
+      </section>
+      <section>
+        <h2>Table HTML</h2>
+        <!-- <textarea id="markup" cols="30" rows="10"></textarea> -->
+        <pre><code id="markup" class="language-html"></code></pre>
+      </section>
+    </main>
 
-  <h1>BOM to table</h1>
-  
-  <input id="csvFile" type="file" accept=".csv" />
-  <hr>
-  <table></table>
-
-  <h2>Table HTML</h2>
-  <!-- <textarea id="markup" cols="30" rows="10"></textarea> -->
-  <pre><code id="markup" class="language-html"></code></pre>
-
-  <script src="bundle.js" defer></script>
-</body>
+    <script src="bundle.js" defer></script>
+  </body>
 </html>

@@ -28,11 +28,46 @@ function partFilter(parts, category) {
     R: /^R\d/,
     Q: /^((?!(R\d|C\d)).)*$/,
   };
-  // const allCaps = {};
-  // Get only Capactiors from array
-  // console.log(`regex: ${regex[category]}`);
-  const caps = parts.filter((part) => part.Part.match(regex[category]));
-  return caps;
+
+  const filteredParts = parts.filter((part) => part.Part.match(regex[category]));
+  return filteredParts;
+}
+
+function getPartType(partName) {
+  // console.log(partName.Part);
+  if (partName.Part.match(/^C\d/) != null) {
+    return 'C';
+    // eslint-disable-next-line no-else-return
+  } else if (partName.Part.match(/^R\d/) != null) {
+    return 'R';
+  }
+  return 'Q';
+}
+
+function getJSONParts(allParts) {
+  const jsonParts = {};
+  const C = {};
+  const R = {};
+  const Q = {};
+
+  allParts.map((partEntry) => {
+    switch (getPartType(partEntry)) {
+      case 'C':
+        C[partEntry.Part] = partEntry.Value;
+        break;
+      case 'R':
+        R[partEntry.Part] = partEntry.Value;
+        break;
+      default:
+        Q[partEntry.Part] = partEntry.Value;
+    }
+  });
+
+  jsonParts['C'] = C;
+  jsonParts['R'] = R;
+  jsonParts['Q'] = Q;
+
+  return jsonParts;
 }
 
 function clearTable() {
@@ -128,11 +163,14 @@ function makeJSON(csvString) {
         Q,
       };
 
-      document.getElementById('jsonObject').innerText = JSON.stringify(
-        parts,
-        null,
-        2,
-      );
+      // document.getElementById('jsonObject').innerText = JSON.stringify(
+      //   parts,
+      //   null,
+      //   2,
+      // );
+      // console.log(object);
+      // console.log(`partname test: ${getPartType(object[0])}`);
+      console.log(getJSONParts(object));
     })
     .catch((e) => {
       console.error(e);

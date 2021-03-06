@@ -22,17 +22,6 @@ function isJunk(element) {
   return !rejectedParts.includes(element.Part);
 }
 
-function partFilter(parts, category) {
-  const regex = {
-    C: /^C\d/,
-    R: /^R\d/,
-    Q: /^((?!(R\d|C\d)).)*$/,
-  };
-
-  const filteredParts = parts.filter((part) => part.Part.match(regex[category]));
-  return filteredParts;
-}
-
 function getPartType(partName) {
   // console.log(partName.Part);
   if (partName.Part.match(/^C\d/) != null) {
@@ -114,7 +103,6 @@ function makeTable(csvString) {
     .then((jsonObj) => {
       // Create array containing only relevant parts
       const parts = jsonObj.filter(isJunk);
-      // console.log(parts)
       const table = document.querySelector('table');
       const headerData = Object.keys(parts[0]);
       generateTableBody(table, parts);
@@ -136,41 +124,13 @@ function makeJSON(csvString) {
     .then((res) => {
       const object = res.filter(isJunk);
 
-      // Components
-      const C = {};
-      const R = {};
-      const Q = {};
+      const parts = getJSONParts(object)
 
-      // caps
-      let tempParts = partFilter(object, 'C');
-      tempParts.map((part) => {
-        C[part.Part] = part.Value;
-      });
-      // resistors
-      tempParts = partFilter(object, 'R');
-      tempParts.map((part) => {
-        R[part.Part] = part.Value;
-      });
-      // others
-      tempParts = partFilter(object, 'Q');
-      tempParts.map((part) => {
-        Q[part.Part] = part.Value;
-      });
-
-      const parts = {
-        C,
-        R,
-        Q,
-      };
-
-      // document.getElementById('jsonObject').innerText = JSON.stringify(
-      //   parts,
-      //   null,
-      //   2,
-      // );
-      // console.log(object);
-      // console.log(`partname test: ${getPartType(object[0])}`);
-      console.log(getJSONParts(object));
+      document.getElementById('jsonObject').innerText = JSON.stringify(
+        parts,
+        null,
+        2,
+      );
     })
     .catch((e) => {
       console.error(e);
@@ -183,7 +143,7 @@ function handleFiles() {
   reader.readAsText(csvFilePath);
   reader.onload = () => {
     clearTable();
-    // makeTable(reader.result);
+    makeTable(reader.result);
     makeJSON(reader.result);
   };
 }

@@ -9,8 +9,8 @@ main {
   flex-direction: row;
   flex-flow: wrap;
   min-width: 500px;
-  max-width: 90vw;
   justify-content: space-between;
+  margin: 0 1rem;
 }
 
 section {
@@ -19,4 +19,5 @@ section {
 
 .upload {
   flex-basis: 100%;
+  text-align: center;
 }

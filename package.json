@@ -7,7 +7,8 @@
     "build": "npm run bundle && npm run copy:html && npm run copy:css",
     "bundle": "browserify ./src/bom2table.js -p tinyify -o ./dist/bundle.js",
     "copy:html": "cpy 'src/*.html' 'dist/'",
-    "copy:css": "cpy 'src/*.css' 'dist/'"
+    "copy:css": "cpy 'src/*.css' 'dist/'",
+    "dev": "watchify ./src/bom2table.js -o ./dist/bundle.js -v"
   },
   "author": "nplayfair",
   "license": "MIT",
@@ -16,13 +17,15 @@
     "pretty": "^2.0.0"
   },
   "devDependencies": {
+    "browserify": "^17.0.0",
     "cpy-cli": "^3.1.1",
-    "eslint": "^7.20.0",
+    "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^8.0.0",
+    "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "prettier": "^2.2.1",
-    "tinyify": "^3.0.0"
+    "tinyify": "^3.0.0",
+    "watchify": "^4.0.0"
   }
 }

@@ -1,14 +1,38 @@
+/* eslint-disable array-callback-return */
 // Modules
 const pretty = require('pretty');
 const csv = require('csvtojson');
 
 // Configuration
 // Which components should we remove from the BOM?
-const rejectedParts = ['TP1', 'TP2', 'TP3', 'G', 'U$1', 'S1', 'J1', 'J2', 'INPUT'];
+const rejectedParts = [
+  'TP1',
+  'TP2',
+  'TP3',
+  'G',
+  'U$1',
+  'S1',
+  'J1',
+  'J2',
+  'INPUT',
+];
 
 // Return false if the Part value of the object passed in is in the list to remove
 function isJunk(element) {
   return !rejectedParts.includes(element.Part);
+}
+
+function partFilter(parts, category) {
+  const regex = {
+    C: /^C\d/,
+    R: /^R\d/,
+    Q: /^((?!(R\d|C\d)).)*$/,
+  };
+  // const allCaps = {};
+  // Get only Capactiors from array
+  // console.log(`regex: ${regex[category]}`);
+  const caps = parts.filter((part) => part.Part.match(regex[category]));
+  return caps;
 }
 
 function clearTable() {
@@ -61,17 +85,68 @@ function makeTable(csvString) {
       generateTableBody(table, parts);
       generateTableHead(table, headerData);
       displayMarkup();
+    })
+    .catch((e) => {
+      console.error(e);
+    });
+}
+
+function makeJSON(csvString) {
+  csv({
+    delimiter: ';',
+    includeColumns: /(Part|Value)/,
+    ignoreEmpty: true,
+  })
+    .fromString(csvString)
+    .then((res) => {
+      const object = res.filter(isJunk);
+
+      // Components
+      const C = {};
+      const R = {};
+      const Q = {};
+
+      // caps
+      let tempParts = partFilter(object, 'C');
+      tempParts.map((part) => {
+        C[part.Part] = part.Value;
+      });
+      // resistors
+      tempParts = partFilter(object, 'R');
+      tempParts.map((part) => {
+        R[part.Part] = part.Value;
+      });
+      // others
+      tempParts = partFilter(object, 'Q');
+      tempParts.map((part) => {
+        Q[part.Part] = part.Value;
+      });
+
+      const parts = {
+        C,
+        R,
+        Q,
+      };
+
+      document.getElementById('jsonObject').innerText = JSON.stringify(
+        parts,
+        null,
+        2,
+      );
+    })
+    .catch((e) => {
+      console.error(e);
     });
 }
 
 function handleFiles() {
-
   const csvFilePath = this.files[0];
   const reader = new FileReader();
   reader.readAsText(csvFilePath);
   reader.onload = () => {
     clearTable();
-    makeTable(reader.result);
+    // makeTable(reader.result);
+    makeJSON(reader.result);
   };
 }
 

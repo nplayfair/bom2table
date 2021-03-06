@@ -9,10 +9,14 @@ main {
   flex-direction: row;
   flex-flow: wrap;
   min-width: 500px;
-  max-width: 80vw;
+  max-width: 90vw;
   justify-content: space-between;
 }
 
 section {
-  flex: 0 0 45%;
+  flex: 0 0 32%;
+}
+
+.upload {
+  flex-basis: 100%;
 }

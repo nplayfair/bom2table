@@ -14,6 +14,14 @@ const rejectedParts = [
   'S1',
   'J1',
   'J2',
+  'JP1',
+  'JP2',
+  'V',
+  'I',
+  'O',
+  'T1',
+  'T2',
+  'T3',
   'INPUT',
 ];
 

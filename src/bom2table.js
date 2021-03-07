@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 // Modules
-const pretty = require('pretty');
+const beautify = require('js-beautify').html;
 const csv = require('csvtojson');
 
 // Configuration
@@ -90,7 +90,7 @@ function generateTableBody(table, data) {
 function displayMarkup() {
   const tableCode = document.querySelector('table').outerHTML;
   const markup = document.getElementById('markup');
-  markup.innerText = pretty(tableCode);
+  markup.innerText = beautify(tableCode);
 }
 
 function makeTable(csvString) {

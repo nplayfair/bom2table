@@ -1,2 +1,3 @@
-publish = "dist"
+base = "src/"
+publish = "dist/"
 command = "npm run build"

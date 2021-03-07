@@ -52,13 +52,21 @@ function getJSONParts(allParts) {
     }
   });
 
-  jsonParts['C'] = C;
-  jsonParts['R'] = R;
-  jsonParts['Q'] = Q;
+  jsonParts.C = C;
+  jsonParts.R = R;
+  jsonParts.Q = Q;
 
   return jsonParts;
 }
 
+// Format the HTML nicely and output to a pre code block
+function displayMarkup() {
+  const tableCode = document.querySelector('table').outerHTML;
+  const markup = document.getElementById('markup');
+  markup.innerText = beautify(tableCode);
+}
+
+// Table functions
 function clearTable() {
   document.querySelector('table').innerHTML = '';
 }
@@ -67,30 +75,26 @@ function generateTableHead(table, data) {
   const thead = table.createTHead();
   const row = thead.insertRow();
   // Populate Header row
-  for (const key of data) {
+  data.map((key) => {
     const th = document.createElement('th');
     const text = document.createTextNode(key);
     th.appendChild(text);
     row.appendChild(th);
-  }
+  });
 }
 
 function generateTableBody(table, data) {
-  for (const element of data) {
+  data.map((component) => {
     const row = table.insertRow();
-    for (const key in element) {
-      const cell = row.insertCell();
-      const text = document.createTextNode(element[key]);
-      cell.appendChild(text);
-    }
-  }
-}
-
-// Format the HTML nicely and output to a pre code block
-function displayMarkup() {
-  const tableCode = document.querySelector('table').outerHTML;
-  const markup = document.getElementById('markup');
-  markup.innerText = beautify(tableCode);
+    // Insert Part Name
+    const partName = row.insertCell();
+    const partNameText = document.createTextNode(component.Part);
+    partName.appendChild(partNameText);
+    // Insert Part Value
+    const partVal = row.insertCell();
+    const partValText = document.createTextNode(component.Value);
+    partVal.appendChild(partValText);
+  });
 }
 
 function makeTable(csvString) {
@@ -103,6 +107,7 @@ function makeTable(csvString) {
     .then((jsonObj) => {
       // Create array containing only relevant parts
       const parts = jsonObj.filter(isJunk);
+      console.log(parts);
       const table = document.querySelector('table');
       const headerData = Object.keys(parts[0]);
       generateTableBody(table, parts);
@@ -114,6 +119,7 @@ function makeTable(csvString) {
     });
 }
 
+// Create a JSON object for Contentful
 function makeJSON(csvString) {
   csv({
     delimiter: ';',
@@ -124,7 +130,7 @@ function makeJSON(csvString) {
     .then((res) => {
       const object = res.filter(isJunk);
 
-      const parts = getJSONParts(object)
+      const parts = getJSONParts(object);
 
       document.getElementById('jsonObject').innerText = JSON.stringify(
         parts,

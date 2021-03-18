@@ -5,8 +5,7 @@
   "main": "bom2table.js",
   "scripts": {
     "build": "npm run bundle && npm run copy:html && npm run copy:css",
-    "build-dist": "tsc",
-    "bundle": "browserify ./src/bom2table.js -p tinyify -o ./dist/bundle.js",
+    "bundle": "browserify ./src/bom2table.ts -p [ tsify --noImplicitAny ] -o ./dist/bundle.js",
     "copy:html": "cpy 'src/*.html' 'dist/'",
     "copy:css": "cpy 'src/*.css' 'dist/'",
     "dev": "watchify ./src/bom2table.js -o ./dist/bundle.js -v",
@@ -29,6 +28,7 @@
     "eslint": "^7.22.0",
     "prettier": "^2.2.1",
     "tinyify": "^3.0.0",
+    "tsify": "^5.0.2",
     "typescript": "^4.2.3",
     "watchify": "^4.0.0"
   }

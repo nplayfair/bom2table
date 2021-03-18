@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable array-callback-return */
 // Modules
 import { html as beautify } from 'js-beautify';
 import csv from 'csvtojson';
@@ -33,10 +32,8 @@ function isJunk(element: part) {
 }
 
 function getPartType(component: part) {
-  // console.log(partName.Part);
   if (component.Part.match(/^C\d/) != null) {
     return 'C';
-    // eslint-disable-next-line no-else-return
   } else if (component.Part.match(/^R\d/) != null) {
     return 'R';
   }
@@ -51,6 +48,7 @@ function getJSONParts(allParts: part[]) {
   };
 
   allParts.map((partEntry: part) => {
+    // Sort parts into capacitors, resistors and others
     switch (getPartType(partEntry)) {
       case 'C':
         jsonParts.C[partEntry.Part] = partEntry.Value;
@@ -144,9 +142,8 @@ function makeJSON(csvString: string) {
 }
 
 const csvPicker = document.getElementById('csvFile') as HTMLInputElement;
-// csvPicker?.addEventListener('change', handleFiles, false);
+
 csvPicker.onchange = function handleFiles(event: Event) {
-  // const csvFile = event.target.files[0];
   const target = event.target as HTMLInputElement;
   const csvFile: File = (target.files as FileList)[0];
   const reader = new FileReader();

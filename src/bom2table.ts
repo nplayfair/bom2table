@@ -24,6 +24,8 @@ const rejectedParts = [
   'T2',
   'T3',
   'INPUT',
+  'IN',
+  'OUT',
 ];
 
 // Return false if the Part value of the object passed in is in the list to remove

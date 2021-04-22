@@ -15,21 +15,21 @@
   "license": "MIT",
   "dependencies": {
     "csvtojson": "^2.0.10",
-    "js-beautify": "^1.13.5",
+    "js-beautify": "^1.13.13",
     "pretty": "^2.0.0"
   },
   "devDependencies": {
     "@types/csvtojson": "^1.1.5",
     "@types/js-beautify": "^1.13.1",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
     "browserify": "^17.0.0",
     "cpy-cli": "^3.1.1",
-    "eslint": "^7.22.0",
+    "eslint": "^7.24.0",
     "prettier": "^2.2.1",
     "tinyify": "^3.0.0",
     "tsify": "^5.0.2",
-    "typescript": "^4.2.3",
+    "typescript": "^4.2.4",
     "watchify": "^4.0.0"
   }
 }

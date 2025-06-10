@@ -1,32 +1,7 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 // Modules
-import { html as beautify } from 'js-beautify';
-import csv from 'csvtojson';
-import { Converter } from 'csvtojson/v2/Converter';
-
-// Configuration
-// Which components should we remove from the BOM?
-const rejectedParts = [
-  'TP1',
-  'TP2',
-  'TP3',
-  'G',
-  'U$1',
-  'S1',
-  'J1',
-  'J2',
-  'JP1',
-  'JP2',
-  'V',
-  'I',
-  'O',
-  'T1',
-  'T2',
-  'T3',
-  'INPUT',
-  'IN',
-  'OUT',
-];
+// import csv from 'csvtojson';
+// import { Converter } from 'csvtojson/v2/Converter';
+import { rejectedParts } from './rejectedParts';
 
 // Return false if the Part value of the object passed in is in the list to remove
 function isJunk(element: part) {
@@ -65,6 +40,7 @@ function getJSONParts(allParts: part[]) {
   return jsonParts;
 }
 
+/* TODO
 // Format the HTML nicely and output to a pre code block
 function displayMarkup() {
   const tableCode = document.querySelector('table')!.outerHTML;
@@ -160,3 +136,4 @@ csvPicker.onchange = function handleFiles(event: Event) {
     makeJSON(csvString);
   };
 }
+*/

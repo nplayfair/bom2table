@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Read CSV File</title>
+  </head>
+  <body>
+    <header>
+      <h1>BOM to Table</h1>
+    </header>
+    <main>
+      <section class="upload">
+        <h2>Upload BOM csv file</h2>
+        <input type="file" id="csvInput" accept=".csv" />
+        <hr />
+      </section>
+      <section id="output">
+        <h3>CSV Text</h3>
+        <pre id="csvText"></pre>
+        <hr />
+        <h3>JSON Object</h3>
+        <pre id="partsJSON"></pre>
+        <hr />
+        <h3>HTML Table</h3>
+        <table id="partsTable"></table>
+        <hr />
+        <h3>Table HTML Markup</h3>
+        <pre id="partsHTML"></pre>
+      </section>
+    </main>
+    <script src="dist/bundle.js"></script>
+    <script>
+      document
+        .getElementById('csvInput')
+        .addEventListener('change', function (event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const content = e.target.result;
+              document.getElementById('csvText').innerText = content;
+            };
+            reader.readAsText(file);
+          }
+        });
+    </script>
+  </body>
+</html>

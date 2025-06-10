@@ -1,7 +1,27 @@
 // Modules
-// import csv from 'csvtojson';
-// import { Converter } from 'csvtojson/v2/Converter';
-import { isJunk, getPartType } from './utils';
+import { csvToJSON } from './csvToJSON';
+
+const input = document.getElementById('csvInput') as HTMLInputElement;
+const csvText = document.getElementById('csvText') as HTMLPreElement;
+
+//Functions
+function handleUpload(event: Event) {
+  const file = (event.target as HTMLInputElement).files![0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const content = (e.target as FileReader).result;
+      if (content === null) throw new Error('CSV Cannot be null.');
+      csvText.innerText = content.toString();
+    };
+    reader.readAsText(file);
+  }
+}
+
+//Add event listener
+input.addEventListener('change', handleUpload);
+
+// csvToJSON();
 
 /* TODO
 // Format the HTML nicely and output to a pre code block

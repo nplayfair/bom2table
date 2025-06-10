@@ -1,5 +1,15 @@
+enum PartType {
+  R,
+  C,
+  D,
+  Q,
+  IC,
+  COMPONENT,
+}
+
 declare interface part {
   Part: string;
+  PartType: PartType;
   Value: string;
 }
 
@@ -10,7 +20,13 @@ declare interface structuredParts {
   R: {
     [key: string]: string;
   };
-  Q: {
+  Q?: {
+    [key: string]: string;
+  };
+  IC?: {
+    [key: string]: string;
+  };
+  COMPONENT?: {
     [key: string]: string;
   };
 }

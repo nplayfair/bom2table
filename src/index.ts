@@ -1,44 +1,7 @@
 // Modules
 // import csv from 'csvtojson';
 // import { Converter } from 'csvtojson/v2/Converter';
-import { rejectedParts } from './rejectedParts';
-
-// Return false if the Part value of the object passed in is in the list to remove
-function isJunk(element: part) {
-  return !rejectedParts.includes(element.Part);
-}
-
-function getPartType(component: part) {
-  if (component.Part.match(/^C\d/) != null) {
-    return 'C';
-  } else if (component.Part.match(/^R\d/) != null) {
-    return 'R';
-  }
-  return 'Q';
-}
-
-function getJSONParts(allParts: part[]) {
-  const jsonParts: structuredParts = {
-    C: {},
-    R: {},
-    Q: {},
-  };
-
-  allParts.map((partEntry: part) => {
-    // Sort parts into capacitors, resistors and others
-    switch (getPartType(partEntry)) {
-      case 'C':
-        jsonParts.C[partEntry.Part] = partEntry.Value;
-        break;
-      case 'R':
-        jsonParts.R[partEntry.Part] = partEntry.Value;
-        break;
-      default:
-        jsonParts.Q[partEntry.Part] = partEntry.Value;
-    }
-  });
-  return jsonParts;
-}
+import { isJunk, getPartType } from './utils';
 
 /* TODO
 // Format the HTML nicely and output to a pre code block

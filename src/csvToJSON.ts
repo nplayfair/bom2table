@@ -11,6 +11,7 @@ const csvConfig = {
 };
 
 export async function getBOM(csvBOM: string) {
-  const bom = await csv(csvConfig).fromString(csvBOM);
+  const rawBOM = await csv(csvConfig).fromString(csvBOM);
+  const bom = rawBOM.filter((part: part) => !isJunk(part));
   return bom;
 }

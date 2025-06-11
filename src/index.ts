@@ -1,10 +1,18 @@
 //Modules
 import { getBOM } from './csvToJSON';
+import {
+  createTableBody,
+  createTableHeader,
+  htmlTable,
+  clearTable,
+} from './utils';
 
 //DOM elements
 const input = document.getElementById('csvInput') as HTMLInputElement;
 const csvTextOutput = document.getElementById('csvText') as HTMLPreElement;
-let rawCSV: string;
+const jsonTextOutput = document.getElementById('partsJSON') as HTMLPreElement;
+
+let csvBOM: string;
 
 //Functions
 function handleUpload(event: Event) {
@@ -23,21 +31,32 @@ function processCSV(fileReader: Event) {
   const content = (fileReader.target as FileReader).result;
   if (content === null) throw new Error('CSV Cannot be null.');
   const csvString = content.toString();
+  csvBOM = csvString;
   //Display the CSV contents
   csvTextOutput.innerText = csvString;
-  const bomJSON = createJSONbom(csvString);
+  //JSON Object
+  printJSONbom(csvString);
+  //Table
+  clearTable();
+  createTable();
 }
 
 //TODO
-async function createJSONbom(csvString: string) {
+async function printJSONbom(csvString: string) {
   const bomJSON = await getBOM(csvString);
-  console.log(bomJSON);
+  // console.log(bomJSON);
+  jsonTextOutput.innerText = JSON.stringify(bomJSON, null, 2);
+  return bomJSON;
+}
+
+async function createTable() {
+  const bomJSON = await getBOM(csvBOM);
+  createTableHeader();
+  createTableBody(htmlTable, bomJSON);
 }
 
 //Add event listener
 input.addEventListener('change', handleUpload);
-
-// csvToJSON();
 
 /* TODO
 // Format the HTML nicely and output to a pre code block
@@ -45,56 +64,6 @@ function displayMarkup() {
   const tableCode = document.querySelector('table')!.outerHTML;
   const markup = document.getElementById('markup') as HTMLElement;
   markup.innerText = beautify(tableCode);
-}
-
-// Table functions
-function clearTable() {
-  document.querySelector('table')!.innerHTML = '';
-}
-
-function generateTableHead(table: HTMLTableElement, data: Array<string>) {
-  const thead = table.createTHead();
-  const row = thead.insertRow();
-  // Populate Header row
-  data.map((key) => {
-    const th = document.createElement('th');
-    const text = document.createTextNode(key);
-    th.appendChild(text);
-    row.appendChild(th);
-  });
-}
-
-function generateTableBody(table: HTMLTableElement, data: part[]) {
-  data.map((component) => {
-    const row = table.insertRow();
-    // Insert Part Name
-    const partName = row.insertCell();
-    const partNameText = document.createTextNode(component.Part);
-    partName.appendChild(partNameText);
-    // Insert Part Value
-    const partVal = row.insertCell();
-    const partValText = document.createTextNode(component.Value);
-    partVal.appendChild(partValText);
-  });
-}
-
-async function makeTable(csvString: string) {
-
-  const converter: Converter = csv({
-    delimiter: ';',
-    includeColumns: /(Part|Value)/,
-    ignoreEmpty: true,
-  })
-
-  const jsonArray = await converter.fromString(csvString);
-  // Filter out unwanted parts
-  const parts = jsonArray.filter(isJunk);
-  // Build table
-  const table = document.querySelector('table') as HTMLTableElement;
-  const headerData = Object.keys(parts[0]);
-  generateTableBody(table, parts);
-  generateTableHead(table, headerData);
-  displayMarkup();
 }
 
 // Create a JSON object for Contentful
@@ -116,23 +85,5 @@ function makeJSON(csvString: string) {
         2,
       );
     });
-}
-
-const csvPicker = document.getElementById('csvFile') as HTMLInputElement;
-
-csvPicker.onchange = function handleFiles(event: Event) {
-  const target = event.target as HTMLInputElement;
-  const csvFile: File = (target.files as FileList)[0];
-  const reader = new FileReader();
-  reader.readAsText(csvFile);
-  reader.onload = () => {
-    if (reader.result == null) {
-      throw new Error('Something went wrong.');
-    }
-    const csvString = reader.result.toString();
-    clearTable();
-    makeTable(csvString);
-    makeJSON(csvString);
-  };
 }
 */

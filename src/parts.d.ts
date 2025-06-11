@@ -9,7 +9,7 @@ enum PartType {
 
 declare interface part {
   Part: string;
-  PartType: PartType;
+  PartType?: PartType;
   Value: string;
 }
 

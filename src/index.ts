@@ -1,5 +1,5 @@
 //Modules
-import { csvToJSON } from './csvToJSON';
+import { getBOM } from './csvToJSON';
 
 //DOM elements
 const input = document.getElementById('csvInput') as HTMLInputElement;
@@ -13,16 +13,25 @@ function handleUpload(event: Event) {
     //Read in from the file
     const reader = new FileReader();
     reader.onload = function (e) {
-      const content = (e.target as FileReader).result;
-      if (content === null) throw new Error('CSV Cannot be null.');
-      const csvString = content.toString();
-      //Display the CSV contents
-      csvTextOutput.innerText = csvString;
-      //Get JSON object from the file
-      console.log();
+      processCSV(e);
     };
     reader.readAsText(file);
   }
+}
+
+function processCSV(fileReader: Event) {
+  const content = (fileReader.target as FileReader).result;
+  if (content === null) throw new Error('CSV Cannot be null.');
+  const csvString = content.toString();
+  //Display the CSV contents
+  csvTextOutput.innerText = csvString;
+  const bomJSON = createJSONbom(csvString);
+}
+
+//TODO
+async function createJSONbom(csvString: string) {
+  const bomJSON = await getBOM(csvString);
+  console.log(bomJSON);
 }
 
 //Add event listener

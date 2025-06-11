@@ -1,28 +1,39 @@
-const path = require("path");
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
-  mode: "development",
-  entry: "./src/index.ts",
-  devtool: "inline-source-map",
+  mode: 'development',
+  entry: './src/index.ts',
+  devtool: 'inline-source-map',
   devServer: {
     static: {
-      directory: path.join(__dirname, "./"),
+      directory: path.join(__dirname, './'),
     },
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/dist",
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/dist',
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'html/**/*',
+          to: '[name][ext]',
+        },
+      ],
+    }),
+  ],
 };

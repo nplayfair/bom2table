@@ -1,4 +1,4 @@
-import { rejectedParts, headers } from './config';
+import { rejectedParts } from './config';
 
 export function isJunk(element: part): boolean {
   // Returns true if element is in the rejected list

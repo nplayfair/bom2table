@@ -1,16 +1,13 @@
 //Modules
 import { getBOM } from './csvToJSON';
-import {
-  createTableBody,
-  createTableHeader,
-  htmlTable,
-  clearTable,
-} from './utils';
+import { PartsTable } from './table';
+import { headers } from './config';
 
 //DOM elements
 const input = document.getElementById('csvInput') as HTMLInputElement;
 const csvTextOutput = document.getElementById('csvText') as HTMLPreElement;
 const jsonTextOutput = document.getElementById('partsJSON') as HTMLPreElement;
+const htmlTable = document.getElementById('partsTable') as HTMLTableElement;
 
 let csvBOM: string;
 
@@ -37,22 +34,20 @@ function processCSV(fileReader: Event) {
   //JSON Object
   printJSONbom(csvString);
   //Table
-  clearTable();
   createTable();
 }
 
-//TODO
+//Print JSON
 async function printJSONbom(csvString: string) {
   const bomJSON = await getBOM(csvString);
-  // console.log(bomJSON);
   jsonTextOutput.innerText = JSON.stringify(bomJSON, null, 2);
-  return bomJSON;
 }
 
+//Construct table
 async function createTable() {
   const bomJSON = await getBOM(csvBOM);
-  createTableHeader();
-  createTableBody(htmlTable, bomJSON);
+  const partsTable = new PartsTable(htmlTable, headers, bomJSON);
+  partsTable.createTable();
 }
 
 //Add event listener

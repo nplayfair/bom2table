@@ -1,45 +1,8 @@
-import { rejectedParts } from './config';
+import { rejectedParts, headers } from './config';
 
 export function isJunk(element: part): boolean {
   // Returns true if element is in the rejected list
   return rejectedParts.includes(element.Part);
-}
-
-//Table functions
-export function clearTable() {
-  document.querySelector('table')!.innerHTML = '';
-}
-
-export const htmlTable = document.getElementById(
-  'partsTable',
-) as HTMLTableElement;
-const headers: string[] = ['Part', 'Value'];
-
-export function createTableHeader(): void {
-  const tHead = htmlTable.createTHead();
-  const hRow = tHead.insertRow();
-  //Populate headers with text
-  for (const header of headers) {
-    const th = document.createElement('th');
-    const headerText = document.createTextNode(header);
-    th.appendChild(headerText);
-    hRow.appendChild(th);
-  }
-}
-
-export function createTableBody(table: HTMLTableElement, parts: part[]) {
-  parts.map((component) => {
-    //Create a row
-    const tRow = table.insertRow();
-    //Insert part name
-    const partName = tRow.insertCell();
-    const partNameText = document.createTextNode(component.Part);
-    partName.appendChild(partNameText);
-    //Insert part value
-    const partValue = tRow.insertCell();
-    const partValText = document.createTextNode(component.Value);
-    partValue.appendChild(partValText);
-  });
 }
 
 // TODO

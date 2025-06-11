@@ -1,3 +1,4 @@
+//Array of part names to omit from the BOM
 export const rejectedParts = [
   'TP1',
   'TP2',
@@ -19,3 +20,14 @@ export const rejectedParts = [
   'IN',
   'OUT',
 ];
+
+//Header titles for the table
+export const headers: string[] = ['Part', 'Value'];
+
+//Config object for csv library
+export const csvConfig = {
+  delimiter: `;`,
+  quote: '"',
+  ignoreEmpty: true,
+  includeColumns: /(Part|Value)/,
+};

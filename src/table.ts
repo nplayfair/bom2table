@@ -38,4 +38,11 @@ export class PartsTable {
       partValue.appendChild(partValText);
     });
   }
+
+  //Create full table
+  public createTable(): void {
+    this.clearTable();
+    this.createTableHeader();
+    this.createTableBody();
+  }
 }

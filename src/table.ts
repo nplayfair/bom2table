@@ -40,9 +40,10 @@ export class PartsTable {
   }
 
   //Create full table
-  public createTable(): void {
+  public createTable(): HTMLElement {
     this.clearTable();
     this.createTableHeader();
     this.createTableBody();
+    return this.htmlTable;
   }
 }

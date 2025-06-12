@@ -7,6 +7,7 @@ import { headers } from './config';
 const input = document.getElementById('csvInput') as HTMLInputElement;
 const csvTextOutput = document.getElementById('csvText') as HTMLPreElement;
 const jsonTextOutput = document.getElementById('partsJSON') as HTMLPreElement;
+const partsHTML = document.getElementById('partsHTML') as HTMLPreElement;
 const htmlTable = document.getElementById('partsTable') as HTMLTableElement;
 
 let csvBOM: string;
@@ -35,6 +36,7 @@ function processCSV(fileReader: Event) {
   printJSONbom(csvString);
   //Table
   createTable();
+  //TODO Table HTML code
 }
 
 //Print JSON
@@ -47,7 +49,16 @@ async function printJSONbom(csvString: string) {
 async function createTable() {
   const bomJSON = await getBOM(csvBOM);
   const partsTable = new PartsTable(htmlTable, headers, bomJSON);
-  partsTable.createTable();
+  const tableMarkup = await partsTable.createTable();
+  printHTMLtable(tableMarkup as HTMLTableElement, partsHTML);
+}
+
+//Print HTML code
+async function printHTMLtable(
+  table: HTMLTableElement,
+  codeBlock: HTMLPreElement,
+) {
+  codeBlock.innerText = table.outerHTML;
 }
 
 //Add event listener

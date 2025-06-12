@@ -2,7 +2,7 @@ export class PartsTable {
   constructor(
     public htmlTable: HTMLTableElement,
     public headers: string[],
-    public jsonBOM: part[],
+    public jsonBOM: Part[],
   ) {}
 
   //Reset table

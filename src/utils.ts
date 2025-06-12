@@ -1,9 +1,9 @@
 import { rejectedParts } from './config';
-
-export function isJunk(element: part): boolean {
-  // Returns true if element is in the rejected list
-  return rejectedParts.includes(element.Part);
-}
+// no longer needed
+// export function isJunk(element: Part): boolean {
+//   // Returns true if element is in the rejected list
+//   return rejectedParts.includes(element.Part);
+// }
 
 // TODO
 /*

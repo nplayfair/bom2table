@@ -1,4 +1,4 @@
-enum PartType {
+enum ComponentType {
   R,
   C,
   D,
@@ -7,10 +7,24 @@ enum PartType {
   COMPONENT,
 }
 
-declare interface part {
+enum Potentiometers {
+  VOL = 'VOL',
+  TONE = 'TONE',
+  GAIN = 'GAIN',
+  RES = 'RES',
+  LEVEL = 'LEVEL',
+  DIST = 'DIST',
+  PRESENCE = 'PRESENCE',
+}
+
+declare interface Part {
   Part: string;
-  PartType?: PartType;
   Value: string;
+}
+
+declare interface Component extends Part {
+  Designator: string; //A letter like R, C, D etc
+  ComponentType: ComponentType;
 }
 
 declare interface structuredParts {

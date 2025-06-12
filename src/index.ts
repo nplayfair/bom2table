@@ -58,13 +58,6 @@ async function createTable() {
 input.addEventListener('change', handleUpload);
 
 /* TODO
-// Format the HTML nicely and output to a pre code block
-function displayMarkup() {
-  const tableCode = document.querySelector('table')!.outerHTML;
-  const markup = document.getElementById('markup') as HTMLElement;
-  markup.innerText = beautify(tableCode);
-}
-
 // Create a JSON object for Contentful
 function makeJSON(csvString: string) {
   csv({

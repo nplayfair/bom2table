@@ -1,4 +1,13 @@
-import { rejectedParts } from './config';
+import { prettify } from 'htmlfy';
+
+//Print HTML code
+export async function printHTMLtable(
+  table: HTMLTableElement,
+  codeBlock: HTMLPreElement,
+) {
+  codeBlock.innerText = prettify(table.outerHTML);
+}
+
 // no longer needed
 // export function isJunk(element: Part): boolean {
 //   // Returns true if element is in the rejected list

@@ -2,6 +2,7 @@
 import { getBOM } from './csvToJSON';
 import { PartsTable } from './table';
 import { headers } from './config';
+import { printHTMLtable } from './utils';
 
 //DOM elements
 const input = document.getElementById('csvInput') as HTMLInputElement;
@@ -51,14 +52,6 @@ async function createTable() {
   const partsTable = new PartsTable(htmlTable, headers, bomJSON);
   const tableMarkup = await partsTable.createTable();
   printHTMLtable(tableMarkup as HTMLTableElement, partsHTML);
-}
-
-//Print HTML code
-async function printHTMLtable(
-  table: HTMLTableElement,
-  codeBlock: HTMLPreElement,
-) {
-  codeBlock.innerText = table.outerHTML;
 }
 
 //Add event listener
